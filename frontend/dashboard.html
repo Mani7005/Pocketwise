@@ -705,7 +705,7 @@
   <div class="toast" id="toast"></div>
 
   <script>
-    const API = 'http://localhost:5000/api';
+    const API = 'https://pocketwise-production.up.railway.app/api';
     const token = localStorage.getItem('pw_token');
     const user = JSON.parse(localStorage.getItem('pw_user') || '{}');
     if (!token) window.location.href = 'index.html';

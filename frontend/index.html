@@ -103,7 +103,7 @@ input::placeholder{color:var(--muted);}
 </div>
 
 <script>
-const API = 'http://localhost:5000/api';
+const API = 'https://pocketwise-production.up.railway.app/api';
 
 function switchTab(tab) {
   document.querySelectorAll('.tab').forEach((t,i) => t.classList.toggle('active', (tab==='login'&&i===0)||(tab==='register'&&i===1)));
