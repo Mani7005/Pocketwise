@@ -171,7 +171,7 @@
 
     /* Main */
     .main {
-      margin-left: 220px;
+      margin-left: 240px;
       padding: 32px;
       flex: 1;
       width: 100%;
@@ -248,17 +248,9 @@
       font-weight: 800;
     }
 
-    .stat-value.income {
-      color: var(--green);
-    }
-
-    .stat-value.expense {
-      color: var(--red);
-    }
-
-    .stat-value.balance {
-      color: var(--accent);
-    }
+    .stat-value.income { color: var(--green); }
+    .stat-value.expense { color: var(--red); }
+    .stat-value.balance { color: var(--accent); }
 
     .stat-sub {
       font-size: 12px;
@@ -279,24 +271,32 @@
       border: 1px solid var(--border);
       border-radius: 16px;
       padding: 24px;
-      height: 420px;
-      /* ✅ FIX */
+      height: 380px;
       display: flex;
-      /* ✅ FIX */
       flex-direction: column;
-    }
-
-    .chart-panel canvas {
-      flex: 1;
-      width: 100%;
-      height: 100%;
+      overflow: hidden;
     }
 
     .panel-title {
       font-family: 'Syne', sans-serif;
       font-size: 16px;
       font-weight: 700;
-      margin-bottom: 20px;
+      margin-bottom: 16px;
+      flex-shrink: 0;
+    }
+
+    .chart-wrap {
+      flex: 1;
+      position: relative;
+      min-height: 0;
+    }
+
+    .chart-wrap canvas {
+      position: absolute !important;
+      top: 0;
+      left: 0;
+      width: 100% !important;
+      height: 100% !important;
     }
 
     /* Transactions panel */
@@ -335,9 +335,7 @@
       border-bottom: 1px solid var(--border);
     }
 
-    .txn-item:last-child {
-      border-bottom: none;
-    }
+    .txn-item:last-child { border-bottom: none; }
 
     .txn-icon {
       width: 38px;
@@ -377,13 +375,8 @@
       flex-shrink: 0;
     }
 
-    .txn-amount.income {
-      color: var(--green);
-    }
-
-    .txn-amount.expense {
-      color: var(--red);
-    }
+    .txn-amount.income { color: var(--green); }
+    .txn-amount.expense { color: var(--red); }
 
     .empty {
       text-align: center;
@@ -403,9 +396,7 @@
       justify-content: center;
     }
 
-    .modal-overlay.open {
-      display: flex;
-    }
+    .modal-overlay.open { display: flex; }
 
     .modal {
       background: var(--surface);
@@ -423,9 +414,7 @@
       margin-bottom: 24px;
     }
 
-    .form-group {
-      margin-bottom: 16px;
-    }
+    .form-group { margin-bottom: 16px; }
 
     label {
       display: block;
@@ -436,8 +425,7 @@
       text-transform: uppercase;
     }
 
-    input,
-    select {
+    input, select {
       width: 100%;
       background: var(--surface2);
       border: 1px solid var(--border);
@@ -450,14 +438,8 @@
       transition: border-color .2s;
     }
 
-    input:focus,
-    select:focus {
-      border-color: var(--accent);
-    }
-
-    select option {
-      background: var(--surface2);
-    }
+    input:focus, select:focus { border-color: var(--accent); }
+    select option { background: var(--surface2); }
 
     .modal-btns {
       display: flex;
@@ -490,10 +472,7 @@
       cursor: pointer;
     }
 
-    .btn-confirm:disabled {
-      opacity: .6;
-      cursor: not-allowed;
-    }
+    .btn-confirm:disabled { opacity: .6; cursor: not-allowed; }
 
     .cp-error {
       color: var(--red);
@@ -552,20 +531,9 @@
       pointer-events: none;
     }
 
-    .toast.show {
-      transform: translateY(0);
-      opacity: 1;
-    }
-
-    .toast.success {
-      border-color: var(--green);
-      color: var(--green);
-    }
-
-    .toast.error {
-      border-color: var(--red);
-      color: var(--red);
-    }
+    .toast.show { transform: translateY(0); opacity: 1; }
+    .toast.success { border-color: var(--green); color: var(--green); }
+    .toast.error { border-color: var(--red); color: var(--red); }
   </style>
 </head>
 
@@ -624,11 +592,15 @@
       <div class="charts-row">
         <div class="chart-panel">
           <div class="panel-title">Spending by Category</div>
-          <canvas id="donut-chart" height="220"></canvas>
+          <div class="chart-wrap">
+            <canvas id="donut-chart"></canvas>
+          </div>
         </div>
         <div class="chart-panel">
           <div class="panel-title">Income vs Expenses (6 months)</div>
-          <canvas id="bar-chart" height="220"></canvas>
+          <div class="chart-wrap">
+            <canvas id="bar-chart"></canvas>
+          </div>
         </div>
       </div>
 
@@ -656,11 +628,9 @@
           <option value="income">Income</option>
         </select>
       </div>
-      <div class="form-group"><label>Amount (₹)</label><input type="number" id="txn-amount" placeholder="0.00"
-          min="0" /></div>
+      <div class="form-group"><label>Amount (₹)</label><input type="number" id="txn-amount" placeholder="0.00" min="0" /></div>
       <div class="form-group"><label>Category</label><select id="txn-category"></select></div>
-      <div class="form-group"><label>Description</label><input type="text" id="txn-desc"
-          placeholder="What was this for?" /></div>
+      <div class="form-group"><label>Description</label><input type="text" id="txn-desc" placeholder="What was this for?" /></div>
       <div class="form-group"><label>Date</label><input type="date" id="txn-date" /></div>
       <div class="modal-btns">
         <button class="btn-cancel" onclick="closeModal('txn')">Cancel</button>
@@ -669,7 +639,7 @@
     </div>
   </div>
 
-  <!-- Account Settings / Change Password Modal -->
+  <!-- Account Settings Modal -->
   <div class="modal-overlay" id="modal-profile">
     <div class="modal">
       <div class="modal-title">Account Settings</div>
@@ -681,23 +651,19 @@
         </div>
       </div>
       <hr class="divider" />
-      <div
-        style="font-family:'Syne',sans-serif;font-size:13px;font-weight:700;margin-bottom:16px;color:var(--muted2);letter-spacing:.5px;">
-        🔒 CHANGE PASSWORD</div>
-      <div class="form-group"><label>Current Password</label><input type="password" id="cp-current"
-          placeholder="Enter current password" autocomplete="current-password" /></div>
-      <div class="form-group"><label>New Password</label><input type="password" id="cp-new"
-          placeholder="Min 6 characters" autocomplete="new-password" /></div>
-      <div class="form-group"><label>Confirm New Password</label><input type="password" id="cp-confirm"
-          placeholder="Repeat new password" autocomplete="new-password" /></div>
+      <div style="font-family:'Syne',sans-serif;font-size:13px;font-weight:700;margin-bottom:16px;color:var(--muted2);letter-spacing:.5px;">
+        🔒 CHANGE PASSWORD
+      </div>
+      <div class="form-group"><label>Current Password</label><input type="password" id="cp-current" placeholder="Enter current password" autocomplete="current-password" /></div>
+      <div class="form-group"><label>New Password</label><input type="password" id="cp-new" placeholder="Min 6 characters" autocomplete="new-password" /></div>
+      <div class="form-group"><label>Confirm New Password</label><input type="password" id="cp-confirm" placeholder="Repeat new password" autocomplete="new-password" /></div>
       <div class="cp-error" id="cp-error"></div>
       <div class="modal-btns">
         <button class="btn-cancel" onclick="closeModal('profile')">Close</button>
         <button class="btn-confirm" id="cp-btn" onclick="changePassword()">Update Password</button>
       </div>
       <div style="margin-top:20px;text-align:center;border-top:1px solid var(--border);padding-top:16px;">
-        <button onclick="logout()"
-          style="background:none;border:none;color:var(--red);font-size:13px;cursor:pointer;">🚪 Sign out</button>
+        <button onclick="logout()" style="background:none;border:none;color:var(--red);font-size:13px;cursor:pointer;">🚪 Sign out</button>
       </div>
     </div>
   </div>
@@ -739,10 +705,15 @@
     }
 
     function updateMonthLabel() {
-      const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+      const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
       document.getElementById('month-label').textContent = months[currentDate.getMonth()] + ' ' + currentDate.getFullYear();
     }
-    function changeMonth(dir) { currentDate.setMonth(currentDate.getMonth() + dir); updateMonthLabel(); loadAll(); }
+
+    function changeMonth(dir) {
+      currentDate.setMonth(currentDate.getMonth() + dir);
+      updateMonthLabel();
+      loadAll();
+    }
 
     // ── Summary ──
     async function loadSummary() {
@@ -772,80 +743,140 @@
         </div>`).join('');
     }
 
-    // ── Donut chart (spending by category) ──
+    // ── Donut chart ──
     async function loadDonutChart() {
       const d = await apiFetch(`/transactions?month=${currentDate.getMonth() + 1}&year=${currentDate.getFullYear()}&limit=200`);
+      const ctx = document.getElementById('donut-chart').getContext('2d');
+      if (donutChart) { donutChart.destroy(); donutChart = null; }
+
       if (!d || !d.transactions) return;
+
       const expenses = d.transactions.filter(t => t.type === 'expense');
       const byCat = {};
-      expenses.forEach(t => { const n = t.category_name || 'Uncategorized'; byCat[n] = (byCat[n] || 0) + parseFloat(t.amount); });
-      const labels = Object.keys(byCat), values = Object.values(byCat);
-      const palette = ['#00f0ff', '#a78bfa', '#00ff88', '#ffd700', '#ff4d4d', '#ff8c00', '#c084fc', '#00e5a0', '#3b9eff', '#ff6eb4'];
-      const ctx = document.getElementById('donut-chart').getContext('2d');
-      if (donutChart) donutChart.destroy();
-      if (!labels.length) {
-        ctx.canvas.style.height = "100%";
-        ctx.canvas.style.width = "100%";
+      expenses.forEach(t => {
+        const n = t.category_name || 'Uncategorized';
+        byCat[n] = (byCat[n] || 0) + parseFloat(t.amount);
+      });
 
+      const labels = Object.keys(byCat);
+      const values = Object.values(byCat);
+      const palette = ['#00f0ff','#a78bfa','#00ff88','#ffd700','#ff4d4d','#ff8c00','#c084fc','#00e5a0','#3b9eff','#ff6eb4'];
+
+      if (!labels.length) {
         ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
         ctx.fillStyle = '#64748b';
         ctx.font = '14px DM Sans';
         ctx.textAlign = 'center';
         ctx.fillText('No expenses this month', ctx.canvas.width / 2, ctx.canvas.height / 2);
+        return;
       }
+
       donutChart = new Chart(ctx, {
         type: 'doughnut',
-        data: { labels, datasets: [{ data: values, backgroundColor: palette.slice(0, labels.length), borderWidth: 0, hoverOffset: 6 }] },
+        data: {
+          labels,
+          datasets: [{
+            data: values,
+            backgroundColor: palette.slice(0, labels.length),
+            borderWidth: 0,
+            hoverOffset: 8
+          }]
+        },
         options: {
-          responsive: true, maintainAspectRatio: false, cutout: '68%',
+          responsive: true,
+          maintainAspectRatio: false,
+          cutout: '65%',
           plugins: {
-            legend: { position: 'right', labels: { color: '#94a3b8', font: { family: 'DM Sans', size: 12 }, padding: 12, boxWidth: 12 } },
-            tooltip: { callbacks: { label: c => ' ' + fmt(c.raw) } }
+            legend: {
+              position: 'right',
+              labels: {
+                color: '#94a3b8',
+                font: { family: 'DM Sans', size: 12 },
+                padding: 12,
+                boxWidth: 12
+              }
+            },
+            tooltip: {
+              callbacks: { label: c => ' ' + fmt(c.raw) }
+            }
           }
         }
       });
     }
 
-    // ── Bar chart (6 months income vs expenses) ──
+    // ── Bar chart ──
     async function loadBarChart() {
-      const MN = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+      const MN = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
       const months = [], labels = [];
       for (let i = 5; i >= 0; i--) {
         const d = new Date(currentDate.getFullYear(), currentDate.getMonth() - i, 1);
         months.push({ month: d.getMonth() + 1, year: d.getFullYear() });
         labels.push(MN[d.getMonth()]);
       }
-      const results = await Promise.all(months.map(m => apiFetch(`/transactions/summary?month=${m.month}&year=${m.year}`)));
-      const incomes = results.map(r => r ? parseFloat(r.income) || 0 : 0);
+
+      const results = await Promise.all(months.map(m =>
+        apiFetch(`/transactions/summary?month=${m.month}&year=${m.year}`)
+      ));
+
+      const incomes  = results.map(r => r ? parseFloat(r.income)  || 0 : 0);
       const expenses = results.map(r => r ? parseFloat(r.expense) || 0 : 0);
+
       const ctx = document.getElementById('bar-chart').getContext('2d');
-      if (barChart) barChart.destroy();
+      if (barChart) { barChart.destroy(); barChart = null; }
+
       barChart = new Chart(ctx, {
         type: 'bar',
         data: {
           labels,
           datasets: [
-                   { label: 'Income', data: incomes, backgroundColor: 'rgba(74,222,128,1)', borderRadius: 6, borderColor: '#4ade80', borderWidth: 1 },
-                  { label: 'Expense', data: expenses, backgroundColor: 'rgba(248,113,113,1)', borderRadius: 6, borderColor: '#f87171', borderWidth: 1 }
-                  ]
+            {
+              label: 'Income',
+              data: incomes,
+              backgroundColor: 'rgba(74,222,128,0.9)',
+              borderColor: '#4ade80',
+              borderWidth: 1,
+              borderRadius: 6
+            },
+            {
+              label: 'Expense',
+              data: expenses,
+              backgroundColor: 'rgba(248,113,113,0.9)',
+              borderColor: '#f87171',
+              borderWidth: 1,
+              borderRadius: 6
+            }
+          ]
         },
         options: {
-          responsive: true, maintainAspectRatio: false,
+          responsive: true,
+          maintainAspectRatio: false,
           plugins: {
-            legend: { labels: { color: '#94a3b8', font: { family: 'DM Sans', size: 12 }, padding: 16, boxWidth: 12 } },
-            tooltip: { callbacks: { label: c => ' ' + fmt(c.raw) } }
+            legend: {
+              labels: {
+                color: '#94a3b8',
+                font: { family: 'DM Sans', size: 12 },
+                padding: 16,
+                boxWidth: 12
+              }
+            },
+            tooltip: {
+              callbacks: { label: c => ' ' + fmt(c.raw) }
+            }
           },
           scales: {
-            x: { ticks: { color: '#64748b', font: { family: 'DM Sans' } }, grid: { color: 'rgba(255,255,255,.03)' } },
-            y: { 
-                 beginAtZero: true,
-                 ticks: { 
-                 color: '#64748b', 
-                font: { family: 'DM Sans' }, 
+            x: {
+              ticks: { color: '#64748b', font: { family: 'DM Sans', size: 12 } },
+              grid: { color: 'rgba(255,255,255,.03)' }
+            },
+            y: {
+              beginAtZero: true,
+              ticks: {
+                color: '#64748b',
+                font: { family: 'DM Sans', size: 12 },
                 callback: v => '₹' + Math.round(v).toLocaleString('en-IN')
-                }, 
-                grid: { color: 'rgba(255,255,255,.05)' } 
-                }
+              },
+              grid: { color: 'rgba(255,255,255,.05)' }
+            }
           }
         }
       });
@@ -861,16 +892,21 @@
 
     // ── Modal helpers ──
     function openModal(type) {
-      if (type === 'txn') { loadCategories(); document.getElementById('txn-date').value = new Date().toISOString().split('T')[0]; }
+      if (type === 'txn') {
+        loadCategories();
+        document.getElementById('txn-date').value = new Date().toISOString().split('T')[0];
+      }
       document.getElementById('modal-' + type).classList.add('open');
     }
+
     function closeModal(type) {
       document.getElementById('modal-' + type).classList.remove('open');
       if (type === 'profile') {
         document.getElementById('cp-error').style.display = 'none';
-        ['cp-current', 'cp-new', 'cp-confirm'].forEach(id => document.getElementById(id).value = '');
+        ['cp-current','cp-new','cp-confirm'].forEach(id => document.getElementById(id).value = '');
       }
     }
+
     document.querySelectorAll('.modal-overlay').forEach(el => {
       el.addEventListener('click', e => { if (e.target === el) el.classList.remove('open'); });
     });
@@ -893,10 +929,10 @@
     // ── Change password ──
     async function changePassword() {
       const current = document.getElementById('cp-current').value.trim();
-      const newPw = document.getElementById('cp-new').value;
+      const newPw   = document.getElementById('cp-new').value;
       const confirm = document.getElementById('cp-confirm').value;
-      const errEl = document.getElementById('cp-error');
-      const btn = document.getElementById('cp-btn');
+      const errEl   = document.getElementById('cp-error');
+      const btn     = document.getElementById('cp-btn');
 
       errEl.style.display = 'none';
 
@@ -911,7 +947,10 @@
       }
 
       btn.disabled = true; btn.textContent = 'Updating...';
-      const d = await apiFetch('/auth/change-password', { method: 'PUT', body: JSON.stringify({ current_password: current, new_password: newPw }) });
+      const d = await apiFetch('/auth/change-password', {
+        method: 'PUT',
+        body: JSON.stringify({ current_password: current, new_password: newPw })
+      });
       btn.disabled = false; btn.textContent = 'Update Password';
 
       if (d?.message) {
@@ -923,7 +962,11 @@
       }
     }
 
-    function logout() { localStorage.removeItem('pw_token'); localStorage.removeItem('pw_user'); window.location.href = 'index.html'; }
+    function logout() {
+      localStorage.removeItem('pw_token');
+      localStorage.removeItem('pw_user');
+      window.location.href = 'index.html';
+    }
 
     async function loadAll() {
       await Promise.allSettled([loadSummary(), loadTransactions(), loadDonutChart(), loadBarChart()]);
