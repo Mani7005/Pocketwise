@@ -837,7 +837,15 @@
           },
           scales: {
             x: { ticks: { color: '#64748b', font: { family: 'DM Sans' } }, grid: { color: 'rgba(255,255,255,.03)' } },
-            y: { ticks: { color: '#64748b', font: { family: 'DM Sans' }, callback: v => '₹' + v.toLocaleString('en-IN') }, grid: { color: 'rgba(255,255,255,.05)' } }
+            y: { 
+                 beginAtZero: true,
+                 ticks: { 
+                 color: '#64748b', 
+                font: { family: 'DM Sans' }, 
+                callback: v => '₹' + Math.round(v).toLocaleString('en-IN')
+                }, 
+                grid: { color: 'rgba(255,255,255,.05)' } 
+                }
           }
         }
       });
