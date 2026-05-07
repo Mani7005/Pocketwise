@@ -1,8 +1,3 @@
--- ============================================================
--- PocketWise - Personal Finance Tracker
--- Database Schema
--- ============================================================
-
 CREATE DATABASE IF NOT EXISTS pocketwise;
 USE pocketwise;
 
@@ -97,16 +92,16 @@ BEGIN
     START TRANSACTION;
 
     INSERT IGNORE INTO categories (user_id, name, icon, color) VALUES
-        (p_user_id, 'Food & Dining',     '🍽️', '#f97316'),
-        (p_user_id, 'Housing',           '🏠', '#8b5cf6'),
-        (p_user_id, 'Transportation',    '🚗', '#06b6d4'),
-        (p_user_id, 'Entertainment',     '🎬', '#ec4899'),
-        (p_user_id, 'Shopping',          '🛍️', '#f59e0b'),
-        (p_user_id, 'Healthcare',        '⚕️', '#10b981'),
-        (p_user_id, 'Education',         '📚', '#3b82f6'),
-        (p_user_id, 'Salary',            '💼', '#22c55e'),
-        (p_user_id, 'Investments',       '📈', '#a855f7'),
-        (p_user_id, 'Miscellaneous',     '💡', '#64748b');
+    (p_user_id, 'Food & Dining',     '', '#f97316'),
+    (p_user_id, 'Housing',           '', '#8b5cf6'),
+    (p_user_id, 'Transportation',    '', '#06b6d4'),
+    (p_user_id, 'Entertainment',     '', '#ec4899'),
+    (p_user_id, 'Shopping',          '', '#f59e0b'),
+    (p_user_id, 'Healthcare',        '', '#10b981'),
+    (p_user_id, 'Education',         '', '#3b82f6'),
+    (p_user_id, 'Salary',            '', '#22c55e'),
+    (p_user_id, 'Investments',       '', '#a855f7'),
+    (p_user_id, 'Miscellaneous',     '', '#64748b');
 
     COMMIT;
 END$$
