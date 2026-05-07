@@ -12,14 +12,24 @@ router.get('/summary', async (req, res) => {
 
     try {
         const [rows] = await db.query(
-            'CALL get_monthly_summary(?, ?, ?)',
+            `SELECT
+                COALESCE(SUM(CASE WHEN type = 'income' THEN amount ELSE 0 END), 0) AS total_income,
+                COALESCE(SUM(CASE WHEN type = 'expense' THEN amount ELSE 0 END), 0) AS total_expense,
+                COALESCE(SUM(CASE WHEN type = 'income' THEN amount ELSE -amount END), 0) AS net_balance
+             FROM transactions
+             WHERE user_id = ?
+               AND MONTH(transaction_date) = ?
+               AND YEAR(transaction_date) = ?`,
             [user_id, month, year]
         );
-        const result = rows[0][0];
-        const total_income = result?.total_income ?? 0;
-        const total_expense = result?.total_expense ?? 0;
-        const net_balance = result?.net_balance ?? 0; res.json({ income: total_income, expense: total_expense, balance: net_balance });
+        const result = rows[0];
+        res.json({
+            income: result.total_income,
+            expense: result.total_expense,
+            balance: result.net_balance
+        });
     } catch (err) {
+        console.error(err);
         res.status(500).json({ error: 'Failed to fetch summary.' });
     }
 });

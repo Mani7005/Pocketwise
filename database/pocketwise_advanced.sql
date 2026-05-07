@@ -294,10 +294,7 @@ END$$
 
 DELIMITER ;
 
--- ============================================================
--- SECTION 5: QUICK SMOKE-TEST QUERIES
--- (Run these manually to verify everything works)
--- ============================================================
+
 /*
 -- Test triggers (run after inserting a transaction):
 SELECT * FROM budgets WHERE user_id = 1;
