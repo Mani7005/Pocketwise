@@ -279,7 +279,7 @@
       border: 1px solid var(--border);
       border-radius: 16px;
       padding: 24px;
-      height: 320px;
+      height: 420px;
       /* ✅ FIX */
       display: flex;
       /* ✅ FIX */
@@ -780,7 +780,7 @@
       const byCat = {};
       expenses.forEach(t => { const n = t.category_name || 'Uncategorized'; byCat[n] = (byCat[n] || 0) + parseFloat(t.amount); });
       const labels = Object.keys(byCat), values = Object.values(byCat);
-      const palette = ['#22d3ee', '#818cf8', '#4ade80', '#fbbf24', '#f87171', '#fb923c', '#a78bfa', '#34d399', '#60a5fa', '#f472b6'];
+      const palette = ['#00f0ff', '#a78bfa', '#00ff88', '#ffd700', '#ff4d4d', '#ff8c00', '#c084fc', '#00e5a0', '#3b9eff', '#ff6eb4'];
       const ctx = document.getElementById('donut-chart').getContext('2d');
       if (donutChart) donutChart.destroy();
       if (!labels.length) {
@@ -825,9 +825,9 @@
         data: {
           labels,
           datasets: [
-            { label: 'Income', data: incomes, backgroundColor: 'rgba(74,222,128,.7)', borderRadius: 6 },
-            { label: 'Expense', data: expenses, backgroundColor: 'rgba(248,113,113,.7)', borderRadius: 6 }
-          ]
+                   { label: 'Income', data: incomes, backgroundColor: 'rgba(74,222,128,1)', borderRadius: 6, borderColor: '#4ade80', borderWidth: 1 },
+                  { label: 'Expense', data: expenses, backgroundColor: 'rgba(248,113,113,1)', borderRadius: 6, borderColor: '#f87171', borderWidth: 1 }
+                  ]
         },
         options: {
           responsive: true, maintainAspectRatio: false,
